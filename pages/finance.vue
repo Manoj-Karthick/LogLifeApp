@@ -1,0 +1,1 @@
+<template>Finance page</template>

@@ -10,12 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@iconify-json/circum": "^1.1.11",
+    "@nuxt/ui": "^2.16.0",
     "nuxt": "^3.11.2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@nuxtjs/color-mode": "^3.4.1",
-    "@nuxtjs/tailwindcss": "^6.12.0"
+    "@egoist/tailwindcss-icons": "^1.8.0",
+    "@iconify/json": "^2.2.208"
   }
 }
