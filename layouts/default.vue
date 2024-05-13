@@ -36,7 +36,7 @@
               >
                 <span class="absolute -inset-1.5" />
                 <span class="sr-only">View notifications</span>
-                <UIcon name="i-circum-bell-on" class="h-6 w-6" />
+                <UIcon name="i-heroicons-bell" class="h-6 w-6" />
               </button>
 
               <!-- Profile dropdown -->
@@ -136,32 +136,27 @@
             >
               <span class="absolute -inset-1.5" />
               <span class="sr-only">View notifications</span>
-              <BellIcon class="h-6 w-6" aria-hidden="true" />
+              <UIcon name="i-heroicons-bell" class="h-6 w-6" />
             </button>
           </div>
           <div class="mt-3 space-y-1 px-2">
-            <DisclosureButton
+            <NuxtLink
               v-for="item in userNavigation"
               :key="item.name"
               as="a"
-              :href="item.href"
+              :to="item.href"
               class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              >{{ item.name }}</DisclosureButton
+              >{{ item.name }}</NuxtLink
             >
           </div>
         </div>
       </div>
     </Disclosure>
 
-    <header class="bg-white shadow">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-          Dashboard
-        </h1>
-      </div>
-    </header>
     <main>
-      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+      <div
+        class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 text-gray-900 min-h-screen"
+      >
         <slot></slot>
       </div>
     </main>
@@ -192,7 +187,7 @@ const navigation = [
   { name: "Finance", href: "/finance", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
+  { name: "Your Profile", href: "/account" },
   { name: "Settings", href: "#" },
   { name: "Sign out", href: "#" },
 ];
