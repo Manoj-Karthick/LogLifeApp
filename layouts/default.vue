@@ -1,194 +1,103 @@
 <template>
-  <div class="min-h-full">
-    <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center justify-between">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <img
-                class="h-8 w-8"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-              />
-            </div>
-            <div class="hidden md:block">
-              <div class="ml-10 flex items-baseline space-x-4">
-                <NuxtLink
-                  v-for="item in navigation"
-                  :key="item.name"
-                  :to="item.href"
-                  :class="[
-                    item.current
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'rounded-md px-3 py-2 text-sm font-medium',
-                  ]"
-                  >{{ item.name }}</NuxtLink
-                >
-              </div>
-            </div>
-          </div>
-          <div class="hidden md:block">
-            <div class="ml-4 flex items-center md:ml-6">
-              <button
-                type="button"
-                class="relative rounded-full bg-gray-800 text-gray-400 font-extrabold size-7 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              >
-                <span class="absolute -inset-1.5" />
-                <span class="sr-only">View notifications</span>
-                <UIcon name="i-heroicons-bell" class="h-6 w-6" />
-              </button>
-
-              <!-- Profile dropdown -->
-              <Menu as="div" class="relative ml-3">
-                <div>
-                  <MenuButton
-                    class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span class="absolute -inset-1.5" />
-                    <span class="sr-only">Open user menu</span>
-                    <img
-                      class="h-8 w-8 rounded-full"
-                      :src="user.imageUrl"
-                      alt=""
-                    />
-                  </MenuButton>
-                </div>
-                <transition
-                  enter-active-class="transition ease-out duration-100"
-                  enter-from-class="transform opacity-0 scale-95"
-                  enter-to-class="transform opacity-100 scale-100"
-                  leave-active-class="transition ease-in duration-75"
-                  leave-from-class="transform opacity-100 scale-100"
-                  leave-to-class="transform opacity-0 scale-95"
-                >
-                  <MenuItems
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  >
-                    <MenuItem
-                      v-for="item in userNavigation"
-                      :key="item.name"
-                      v-slot="{ active }"
-                    >
-                      <a
-                        :href="item.href"
-                        :class="[
-                          active ? 'bg-gray-100' : '',
-                          'block px-4 py-2 text-sm text-gray-700',
-                        ]"
-                        >{{ item.name }}</a
-                      >
-                    </MenuItem>
-                  </MenuItems>
-                </transition>
-              </Menu>
-            </div>
-          </div>
-          <div class="-mr-2 flex md:hidden">
-            <!-- Mobile menu button -->
-            <DisclosureButton
-              class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            >
-              <span class="absolute -inset-0.5" />
-              <span class="sr-only">Open main menu</span>
-              <Bars3Icon
-                v-if="!open"
-                class="block h-6 w-6"
-                aria-hidden="true"
-              />
-              <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
-            </DisclosureButton>
-          </div>
-        </div>
-      </div>
-
-      <div class="md:hidden">
-        <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-          <NuxtLink
-            v-for="item in navigation"
-            :key="item.name"
-            :to="item.href"
-            :class="[
-              item.current
-                ? 'bg-gray-900 text-white'
-                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-              'block rounded-md px-3 py-2 text-base font-medium',
-            ]"
-            >{{ item.name }}</NuxtLink
-          >
-        </div>
-        <div class="border-t border-gray-700 pb-3 pt-4">
-          <div class="flex items-center px-5">
-            <div class="flex-shrink-0">
-              <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
-            </div>
-            <div class="ml-3">
-              <div class="text-base font-medium leading-none text-white">
-                {{ user.name }}
-              </div>
-              <div class="text-sm font-medium leading-none text-gray-400">
-                {{ user.email }}
-              </div>
-            </div>
-            <button
-              type="button"
-              class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            >
-              <span class="absolute -inset-1.5" />
-              <span class="sr-only">View notifications</span>
-              <UIcon name="i-heroicons-bell" class="h-6 w-6" />
-            </button>
-          </div>
-          <div class="mt-3 space-y-1 px-2">
-            <NuxtLink
-              v-for="item in userNavigation"
-              :key="item.name"
-              as="a"
-              :to="item.href"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              >{{ item.name }}</NuxtLink
-            >
-          </div>
-        </div>
-      </div>
-    </Disclosure>
-
-    <main>
+  <div class="h-screen min-h-[0px] basis-0 flex-1">
+    <div class="flex h-full">
       <div
-        class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 text-gray-900 min-h-screen"
+        id="with-sidebar"
+        class="h-full bg-studio hide-scrollbar w-64 overflow-auto border-r border-default"
       >
-        <slot></slot>
+        <sidebar></sidebar>
       </div>
-    </main>
+      <div class="flex flex-1 flex-col">
+        <div
+          class="flex h-12 max-h-12 items-center justify-between py-2 px-5 border-b border-default"
+        >
+          <div class="-ml-2 flex items-center text-sm">
+            <a
+              class="text-gray-1100 block px-2 py-1 text-xs leading-5 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              >Projects</a
+            >
+          </div>
+          <div class="flex items-center gap-x-2">
+            <span
+              class="relative justify-center cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border text-foreground bg-transparent border-strong hover:border-stronger focus-visible:outline-border-strong data-[state=open]:border-stronger data-[state=open]:outline-border-strong text-xs px-2.5 py-1 h-[26px] hidden md:flex"
+              data-size="tiny"
+              type="button"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="radix-:R1kqcpm:"
+              data-state="closed"
+              ><span class="truncate">Feedback</span></span
+            ><button
+              data-size="tiny"
+              type="button"
+              class="relative justify-center cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border text-foreground hover:bg-surface-300 shadow-none focus-visible:outline-border-strong data-[state=open]:bg-surface-300 data-[state=open]:outline-border-strong border-transparent text-xs py-1 h-[26px] group px-1"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="radix-:R2kqcpm:"
+              data-state="closed"
+            >
+              <!-- -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-inbox transition group-hover:text-foreground text-foreground-light"
+              >
+                <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+                <path
+                  d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+                ></path>
+              </svg>
+            </button>
+            <div
+              class="relative flex items-center"
+              data-state="closed"
+              type="button"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="radix-:R3kqcpm:"
+            >
+              <button
+                data-size="tiny"
+                type="button"
+                id="help-popover-button"
+                class="relative justify-center cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border text-foreground hover:bg-surface-300 shadow-none focus-visible:outline-border-strong data-[state=open]:bg-surface-300 data-[state=open]:outline-border-strong border-transparent text-xs py-1 h-[26px] px-1"
+              >
+                <div class="[&amp;_svg]:h-[14px] [&amp;_svg]:w-[14px]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="sbui-icon text-foreground-light"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <!-- -->
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1 flex-grow overflow-y-auto">
+          <div class="p-5">
+            <slot></slot>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
-<script setup>
-import {
-  Disclosure,
-  DisclosureButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/vue";
-
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-const navigation = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "Expiry", href: "/expiry", current: false },
-  { name: "Habit", href: "/habit", current: false },
-  { name: "Todos", href: "/todo", current: false },
-  { name: "Finance", href: "/finance", current: false },
-];
-const userNavigation = [
-  { name: "Your Profile", href: "/account" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-</script>

@@ -13,6 +13,7 @@
     "@iconify-json/circum": "^1.1.11",
     "@nuxt/ui": "^2.16.0",
     "@nuxtjs/supabase": "^1.2.2",
+    "lucide-vue-next": "^0.379.0",
     "nuxt": "^3.11.2",
     "resend": "^3.2.0",
     "vue": "^3.4.21",
